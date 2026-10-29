@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#10243b">
+  <title>Pennywise — Expense Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <main id="authView" class="auth-shell">
+    <section class="auth-brand">
+      <a class="brand brand-light" href="#"><span class="brand-mark">₨</span><span>Pennywise<span class="brand-dot">.</span></span></a>
+      <div class="brand-copy">
+        <span class="eyebrow">YOUR MONEY, IN FOCUS</span>
+        <h1>Make every rupee<br>work <em>for you.</em></h1>
+        <p>A calmer, clearer way to understand your spending, build better habits, and reach your goals.</p>
+        <div class="brand-points">
+          <div><span class="point-icon">↗</span><span><b>See the bigger picture</b><small>Beautiful, easy-to-read spending insights</small></span></div>
+          <div><span class="point-icon">◷</span><span><b>Stay in control</b><small>Track expenses and budgets in one place</small></span></div>
+          <div><span class="point-icon">⌁</span><span><b>Build better habits</b><small>Simple progress, one day at a time</small></span></div>
+        </div>
+      </div>
+      <div class="brand-footer">A little more clarity. A lot more confidence.</div>
+    </section>
+    <section class="auth-panel">
+      <div class="auth-card">
+        <a class="brand brand-mobile" href="#"><span class="brand-mark">₨</span><span>Pennywise<span class="brand-dot">.</span></span></a>
+        <div class="auth-heading"><span class="eyebrow">WELCOME TO PENNYWISE</span><h2 id="authTitle">Welcome back</h2><p id="authSubtitle">Sign in to pick up where you left off.</p></div>
+        <div class="auth-tabs"><button class="auth-tab active" id="loginTab" type="button">Sign in</button><button class="auth-tab" id="registerTab" type="button">Create account</button></div>
+        <form id="authForm" autocomplete="on">
+          <div class="field" id="nameField" hidden><label for="fullName">Full name</label><input id="fullName" type="text" placeholder="e.g. Hrishikesh Ghosh" autocomplete="name"></div>
+          <div class="field"><label for="email">Email address</label><input id="email" type="email" placeholder="you@example.com" autocomplete="email" required></div>
+          <div class="field"><div class="label-row"><label for="password">Password</label><button class="text-button" id="forgotBtn" type="button">Demo note</button></div><input id="password" type="password" placeholder="At least 6 characters" minlength="6" autocomplete="current-password" required></div>
+          <div class="field" id="confirmField" hidden><label for="confirmPassword">Confirm password</label><input id="confirmPassword" type="password" placeholder="Enter password again" minlength="6" autocomplete="new-password"></div>
+          <p class="form-error" id="authError" role="alert"></p>
+          <button class="primary-btn full-btn" id="authSubmit" type="submit">Sign in <span>→</span></button>
+        </form>
+        <p class="auth-switch" id="authSwitch">New to Pennywise? <button class="text-button" id="switchToRegister" type="button">Create an account</button></p>
+        <p class="security-note"><span>◈</span> Demo mode · your data stays in this browser</p>
+      </div>
+    </section>
+  </main>
+
+  <main id="appView" class="app-shell" hidden>
+    <aside class="sidebar" id="sidebar">
+      <a class="brand brand-light sidebar-brand" href="#"><span class="brand-mark">₨</span><span>Pennywise<span class="brand-dot">.</span></span></a>
+      <div class="workspace-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-page="dashboard"><span>▦</span>Overview</button>
+        <button class="nav-link" data-page="transactions"><span>⇄</span>Transactions</button>
+        <button class="nav-link" data-page="analytics"><span>▥</span>Analytics</button>
+        <button class="nav-link" data-page="budgets"><span>◎</span>Budgets</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-tip"><span class="tip-spark">✦</span><b>Small steps add up.</b><p>Understanding your spending is the first step to changing it.</p></div>
+        <button class="nav-link" data-page="settings"><span>⚙</span>Settings</button>
+        <button class="nav-link logout-link" id="logoutBtn"><span>↪</span>Sign out</button>
+        <div class="sidebar-user"><div class="avatar" id="userAvatar">U</div><div class="user-meta"><b id="sidebarName">Your account</b><small id="sidebarEmail">you@example.com</small></div><span class="user-menu-dot">•••</span></div>
+      </div>
+    </aside>
+    <section class="main-area">
+      <header class="topbar">
+        <div class="topbar-left"><button class="mobile-menu" id="mobileMenu" aria-label="Toggle menu">☰</button><div><div class="breadcrumb">Personal finance <span>/</span> <b id="breadcrumbPage">Overview</b></div><p class="topbar-date" id="todayLabel"></p></div></div>
+        <div class="topbar-actions"><span class="status-pill"><i></i> Your finances, in focus</span><button class="icon-btn" id="quickAddBtn" title="Add expense" aria-label="Add expense">＋</button></div>
+      </header>
+      <div class="page-wrap">
+        <section class="page active" id="page-dashboard">
+          <div class="page-heading"><div><span class="eyebrow">YOUR FINANCIAL SNAPSHOT</span><h1>Good to see you, <span id="greetingName">there</span> <span class="wave">✦</span></h1><p>Here's what's happening with your money.</p></div><button class="primary-btn" id="addExpenseBtn"><span class="btn-plus">＋</span> Add expense</button></div>
+          <div class="filter-row"><div class="period-control"><span>◷</span><select id="dashboardPeriod" aria-label="Dashboard date range"><option value="month">This month</option><option value="lastMonth">Last month</option><option value="year">This year</option><option value="all">All time</option></select></div><span class="updated-note">● Live from your transactions</span></div>
+          <div class="summary-grid">
+            <article class="summary-card balance-card"><div class="summary-top"><span class="summary-label">Total balance</span><span class="summary-icon green">₹</span></div><div class="summary-value" id="totalBalance">₹0.00</div><div class="summary-foot"><span class="trend-mark">↗</span><span>Income minus expenses</span></div><div class="card-orb orb-one"></div><div class="card-orb orb-two"></div></article>
+            <article class="summary-card"><div class="summary-top"><span class="summary-label">Income</span><span class="summary-icon blue">↙</span></div><div class="summary-value" id="totalIncome">₹0.00</div><div class="summary-foot"><span class="trend-mark positive">↑</span><span>Money coming in</span></div></article>
+            <article class="summary-card"><div class="summary-top"><span class="summary-label">Expenses</span><span class="summary-icon coral">↗</span></div><div class="summary-value" id="totalExpense">₹0.00</div><div class="summary-foot"><span class="trend-mark negative">↓</span><span>Money going out</span></div></article>
+            <article class="summary-card"><div class="summary-top"><span class="summary-label">Savings rate</span><span class="summary-icon violet">◇</span></div><div class="summary-value" id="savingsRate">0%</div><div class="summary-foot"><span class="trend-mark positive">✦</span><span>Of your income kept</span></div></article>
+          </div>
+          <div class="dashboard-grid">
+            <article class="panel spending-panel"><div class="panel-heading"><div><h3>Spending overview</h3><p>Income vs expenses over time</p></div><span class="chart-legend"><i class="legend-income"></i> Income <i class="legend-expense"></i> Expenses</span></div><div class="chart-box chart-large"><canvas id="overviewChart" aria-label="Income and expense chart"></canvas></div></article>
+            <article class="panel category-panel"><div class="panel-heading"><div><h3>Where it goes</h3><p>Expense breakdown by category</p></div><button class="subtle-link" data-goto="analytics">Details ↗</button></div><div class="donut-wrap"><div class="chart-box chart-donut"><canvas id="categoryChart" aria-label="Expense category doughnut chart"></canvas><div class="donut-center"><small>Total spent</small><b id="donutTotal">₹0</b></div></div><div class="category-legend" id="categoryLegend"></div></div></article>
+          </div>
+          <div class="bottom-grid">
+            <article class="panel recent-panel"><div class="panel-heading"><div><h3>Recent transactions</h3><p>Your latest money moves</p></div><button class="subtle-link" data-goto="transactions">View all →</button></div><div class="table-wrap"><table><thead><tr><th>Transaction</th><th>Category</th><th>Date</th><th class="align-right">Amount</th></tr></thead><tbody id="recentRows"></tbody></table><div class="empty-state" id="recentEmpty" hidden><span>◌</span><b>No transactions yet</b><p>Add your first income or expense to see your dashboard come alive.</p><button class="primary-btn" data-open-add>Add transaction</button></div></div></article>
+            <article class="panel budget-mini"><div class="panel-heading"><div><h3>Budget check-in</h3><p>Monthly spending limits</p></div><button class="subtle-link" data-goto="budgets">Manage →</button></div><div id="budgetPreview"></div></article>
+          </div>
+        </section>
+
+        <section class="page" id="page-transactions">
+          <div class="page-heading"><div><span class="eyebrow">YOUR MONEY MOVES</span><h1>Transactions</h1><p>Every rupee, accounted for.</p></div><button class="primary-btn" data-open-add>＋ Add transaction</button></div>
+          <div class="panel transaction-panel"><div class="transaction-tools"><label class="search-box"><span>⌕</span><input id="searchTransactions" type="search" placeholder="Search description or category…"></label><select id="typeFilter" aria-label="Filter by type"><option value="all">All types</option><option value="expense">Expenses</option><option value="income">Income</option></select><select id="categoryFilter" aria-label="Filter by category"><option value="all">All categories</option></select><select id="sortFilter" aria-label="Sort transactions"><option value="newest">Newest first</option><option value="oldest">Oldest first</option><option value="highest">Highest amount</option><option value="lowest">Lowest amount</option></select><button class="outline-btn" id="exportBtn">↓ Export CSV</button></div><div class="table-wrap"><table class="full-table"><thead><tr><th>Transaction</th><th>Category</th><th>Type</th><th>Date</th><th class="align-right">Amount</th><th></th></tr></thead><tbody id="transactionRows"></tbody></table><div class="empty-state" id="transactionEmpty" hidden><span>⌕</span><b>Nothing found</b><p>Try a different search or add a transaction.</p></div></div><div class="table-footer"><span id="transactionCount">0 transactions</span><button class="subtle-link" id="clearFiltersBtn">Clear filters</button></div></div>
+        </section>
+
+        <section class="page" id="page-analytics">
+          <div class="page-heading"><div><span class="eyebrow">PATTERNS & INSIGHTS</span><h1>Your money, decoded.</h1><p>Understand your habits and spot opportunities to save.</p></div><div class="period-control"><span>◷</span><select id="analyticsPeriod" aria-label="Analytics date range"><option value="month">This month</option><option value="lastMonth">Last month</option><option value="year">This year</option><option value="all">All time</option></select></div></div>
+          <div class="summary-grid analytics-summary"><article class="summary-card"><div class="summary-top"><span class="summary-label">Average expense</span><span class="summary-icon coral">↗</span></div><div class="summary-value" id="avgExpense">₹0.00</div><div class="summary-foot">Per expense transaction</div></article><article class="summary-card"><div class="summary-top"><span class="summary-label">Top category</span><span class="summary-icon violet">✦</span></div><div class="summary-value text-value" id="topCategory">—</div><div class="summary-foot" id="topCategoryAmount">No spending yet</div></article><article class="summary-card"><div class="summary-top"><span class="summary-label">Transactions</span><span class="summary-icon blue">⇄</span></div><div class="summary-value" id="analyticsCount">0</div><div class="summary-foot">In selected period</div></article><article class="summary-card"><div class="summary-top"><span class="summary-label">Daily average</span><span class="summary-icon green">◷</span></div><div class="summary-value" id="dailyAverage">₹0.00</div><div class="summary-foot">Expense pace for this period</div></article></div>
+          <div class="dashboard-grid analytics-charts"><article class="panel"><div class="panel-heading"><div><h3>Expense trend</h3><p>How your spending changes over time</p></div></div><div class="chart-box chart-large"><canvas id="trendChart"></canvas></div></article><article class="panel"><div class="panel-heading"><div><h3>Category comparison</h3><p>Which areas cost the most</p></div></div><div class="chart-box chart-large"><canvas id="barChart"></canvas></div></article></div>
+          <article class="panel insights-panel"><div class="panel-heading"><div><h3>Your spending insights</h3><p>A few helpful observations from your data</p></div><span class="insight-badge">✦ Personalised</span></div><div class="insight-grid" id="insightGrid"></div></article>
+        </section>
+
+        <section class="page" id="page-budgets">
+          <div class="page-heading"><div><span class="eyebrow">PLAN WITH PURPOSE</span><h1>Budgets</h1><p>Give your money a plan before it leaves your pocket.</p></div><button class="primary-btn" id="addBudgetBtn">＋ Set a budget</button></div>
+          <div class="budget-hero"><div><span class="eyebrow">MONTHLY SPENDING LIMITS</span><h2>Small boundaries.<br><em>Big possibilities.</em></h2><p>Set category limits to help keep your spending aligned with what matters.</p></div><div class="budget-hero-stat"><span>Overall budget used</span><b id="budgetOverallPct">0%</b><div class="progress-track"><span id="budgetOverallBar"></span></div><small id="budgetOverallText">₹0 spent of ₹0 planned</small></div></div>
+          <div class="budget-grid" id="budgetGrid"></div>
+        </section>
+
+        <section class="page" id="page-settings">
+          <div class="page-heading"><div><span class="eyebrow">YOUR SPACE</span><h1>Settings</h1><p>Manage your profile and your Pennywise experience.</p></div></div>
+          <div class="settings-grid"><article class="panel settings-panel"><div class="panel-heading"><div><h3>Personal details</h3><p>How we address you in the app</p></div></div><form id="profileForm"><div class="field"><label for="profileName">Full name</label><input id="profileName" required maxlength="80"></div><div class="field"><label for="profileEmail">Email address</label><input id="profileEmail" type="email" disabled></div><button class="primary-btn" type="submit">Save changes</button><p class="inline-feedback" id="profileFeedback"></p></form></article><article class="panel settings-panel"><div class="panel-heading"><div><h3>Data & privacy</h3><p>Your demo data is stored in this browser</p></div></div><div class="privacy-callout"><span>◇</span><div><b>Local-first storage</b><p>Transactions and profile data stay in this browser's local storage. They are not synced between devices.</p></div></div><button class="outline-btn" id="downloadDataBtn">↓ Download my data (JSON)</button><hr><h4>Danger zone</h4><p class="muted">Delete your transactions and budgets from this browser.</p><button class="danger-btn" id="clearDataBtn">Clear financial data</button></article></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="expenseModal" hidden>
+    <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-heading"><div><span class="eyebrow">KEEP IT UP TO DATE</span><h2 id="modalTitle">Add transaction</h2><p>Record an income or expense in seconds.</p></div><button class="close-btn" id="closeModal" aria-label="Close">×</button></div>
+      <form id="expenseForm">
+        <div class="type-switch"><button type="button" class="type-option active" data-type="expense">↗ Expense</button><button type="button" class="type-option" data-type="income">↙ Income</button></div>
+        <div class="field"><label for="expenseDescription">Description</label><input id="expenseDescription" placeholder="e.g. Weekly groceries" maxlength="100" required></div>
+        <div class="form-two-col"><div class="field"><label for="expenseAmount">Amount (₹)</label><input id="expenseAmount" type="number" min="0.01" max="100000000" step="0.01" placeholder="0.00" required></div><div class="field"><label for="expenseCategory">Category</label><select id="expenseCategory" required></select></div></div>
+        <div class="field"><label for="expenseDate">Date</label><input id="expenseDate" type="date" required></div>
+        <div class="field"><label for="expenseNote">Note <span class="optional">(optional)</span></label><textarea id="expenseNote" rows="2" maxlength="250" placeholder="Add a little context…"></textarea></div>
+        <p class="form-error" id="expenseError" role="alert"></p><div class="modal-actions"><button class="outline-btn" type="button" id="cancelModal">Cancel</button><button class="primary-btn" type="submit" id="saveTransactionBtn">Save transaction →</button></div>
+      </form>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
